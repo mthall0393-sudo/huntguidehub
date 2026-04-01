@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HuntGuideHub - Outfitters for {{species}} | HuntGuideHub</title>
+    <meta name="description" content="Find licensed hunting outfitters specializing in {{species}} across the United States. Compare ratings, pricing, and contact details." />
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <header class="site-header">
+        <h1>Outfitters for <span id="speciesName">Species</span></h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="outfitters" class="outfitter-grid">
+            <!-- Placeholder cards; in a real site this would be populated dynamically -->
+            <div class="outfitters-placeholder">Outfitters for <strong id="speciesPlaceholder"></strong> will appear here.</div>
+        </section>
+    </main>
+    <footer class="site-footer">
+        <p>&copy; 2026 HuntGuideHub. All rights reserved.</p>
+    </footer>
+    <script>
+        // Simple client‑side extraction of the "species" query param
+        const params = new URLSearchParams(window.location.search);
+        const species = params.get('species') || 'Unknown';
+        document.getElementById('speciesName').textContent = species.charAt(0).toUpperCase() + species.slice(1);
+        document.getElementById('speciesPlaceholder').textContent = species;
+    </script>
+</body>
+</html>

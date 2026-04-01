@@ -1,0 +1,68 @@
+SEO Strategy for HuntGuideHub.com
+===================================
+
+**Goal**: Rank on the first page of Google for hunting‑related queries such as "hog hunting outfitters", "deer guide near me", "elk hunting trips" and attract organic traffic that converts into leads.
+
+---
+
+1. **Keyword Research**
+   - Primary target keywords per species: "[species] hunting outfitters", "[species] guide", "[species] hunting trips".
+   - Long‑tail modifiers: "best", "affordable", "licensed", "reviews", "2026".
+   - State‑specific combos: "Texas hog hunting guides", "Colorado elk guide".
+   - Blog topics focused on informational intent (how‑to, gear reviews, trip itineraries) capture traffic early in the funnel.
+
+2. **On‑Page SEO**
+   - **Title Tag**: `"[Category] Guides & Outfitters | HuntGuideHub"` (e.g., "Hog Guides & Outfitters | HuntGuideHub").
+   - **Meta Description**: 150‑160 chars, include primary keyword and call‑to‑action.
+   - **Header Structure**: H1 – page name (e.g., "Hog Outfitters"), H2 – sections ("Top Rated", "How to Choose"), H3 – individual outfitters.
+   - **Schema Markup**:
+     * `LocalBusiness` on each outfitter profile with `name`, `address`, `telephone`, `priceRange`, `aggregateRating`.
+     * `Review` objects for user ratings.
+     * `BlogPosting` schema for every blog article.
+     * `Organization` on home and about pages.
+   - **Image Alt Text**: descriptive and keyword‑rich.
+   - **URL Structure**: clean, keyword‑focused (e.g., `/category.html?species=hog` → `/hog/`). For static build we keep query‑param but include canonical links.
+
+3. **Content Strategy**
+   - **Blog**: 5 SEO‑optimized posts (already created) covering tips, gear, trip guides, destination guides.
+   - **Outfitter Profiles**: Unique descriptions, highlight licenses, amenities, past client testimonials.
+   - **State Pages**: Intro paragraph with state‑specific hunting regulations and links to relevant outfitters.
+   - **FAQ Section** on each category page addressing common hunter questions.
+
+4. **Technical SEO**
+   - **Sitemap** (`sitemap.xml`) includes every HTML page and blog post URLs; submitted to Google Search Console.
+   - **Robots.txt** (not required for deliverables but recommended) – allow all, block admin paths.
+   - **Mobile‑First, Responsive Design** – CSS grid, media queries, fast loading assets (< 100 KB CSS, deferred JS).
+   - **Page Speed**: Minify HTML/CSS, lazy‑load images, enable HTTP/2 compression.
+   - **Canonical Tags** to avoid duplicate content (especially category pages with query params).
+   - **HTML Validation** – no broken tags.
+
+5. **Link Building**
+   - **Internal Links**: Cross‑link species, state, and blog pages.
+   - **External Outreach**: Guest posts on hunting forums, link exchange with partner outfitters, citations from regulatory agency pages.
+   - **Social Signals**: Share blog posts on Facebook/Instagram; embed Open Graph meta tags (future enhancement).
+
+6. **Local SEO**
+   - Each outfitter profile includes `LocalBusiness` schema with exact address, phone, and Google Maps embed (future).
+   - Encourage outfitters to claim their listings and collect reviews.
+
+7. **Monitoring & Reporting**
+   - Track rankings for primary keywords weekly using a rank‑tracker.
+   - Monitor organic traffic, bounce rate, and conversion (lead form submissions).
+   - Quarterly SEO audit: check for broken links, duplicate content, and new keyword opportunities.
+
+---
+
+**Implementation Checklist**
+- [x] Title tags & meta descriptions for every page.
+- [x] H1/H2 hierarchy.
+- [x] JSON‑LD schema (Organization, Blog, LocalBusiness, Review).
+- [x] Sitemap.xml generated.
+- [x] Responsive CSS.
+- [x] Blog with 5 SEO‑optimized posts.
+- [x] Search box on homepage (placeholder).
+- [x] Contact form (email capture placeholder).
+- [ ] Open Graph tags (future).
+- [ ] Structured data testing (future).
+
+Following this strategy will give HuntGuideHub a solid foundation to rank highly, attract hunters, and convert them into leads for outfitters.
