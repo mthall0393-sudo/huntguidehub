@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Source+Serif+4:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css" />
+    <script src="outfitters.js"></script>
 </head>
 <body>
     <header class="site-header">
@@ -42,6 +43,7 @@
                         <option value="AK">Alaska</option>
                         <option value="OK">Oklahoma</option>
                         <option value="LA">Louisiana</option>
+                        <option value="MO">Missouri</option>
                         <option value="AR">Arkansas</option>
                         <option value="GA">Georgia</option>
                         <option value="FL">Florida</option>
@@ -55,6 +57,20 @@
                         <option value="low">Under $1,500</option>
                         <option value="mid">$1,500 - $3,000</option>
                         <option value="high">Over $3,000</option>
+                    </select>
+                </div>
+                <div style="flex:1; min-width:200px;">
+                    <label style="font-weight:bold; display:block; margin-bottom:0.5rem;">Filter by Species</label>
+                    <select id="speciesFilter" style="padding:0.5rem; width:100%; border-radius:4px; border:1px solid #ddd;">
+                        <option value="">All Species</option>
+                        <option value="Elk">Elk</option>
+                        <option value="Deer">Deer</option>
+                        <option value="Waterfowl">Waterfowl</option>
+                        <option value="Pheasant">Pheasant</option>
+                        <option value="Bear">Bear</option>
+                        <option value="Hog">Hog</option>
+                        <option value="Turkey">Turkey</option>
+                        <option value="Antelope">Antelope</option>
                     </select>
                 </div>
                 <div style="flex:1; min-width:200px;">
@@ -83,59 +99,18 @@
         <p>&copy; 2026 HuntGuideHub. All rights reserved.</p>
     </footer>
     <script>
-        // All outfitters data
-        const allOutfitters = [
+        // Load outfitters from outfitters.js
+        const allOutfitters = typeof OUTFITTERS !== 'undefined' ? OUTFITTERS.map(o => ({
+            name: o.name,
+            city: o.city,
+            state: o.state,
+            species: o.species ? o.species.join(', ') : '',
+            price: o.priceStarting || 0,
+            rating: o.rating || 0,
+            email: o.email || '',
+            id: o.id
+        })) : [
             {name: "Colorado Elk Outfitter, LLC", city: "Colorado Springs", state: "CO", species: "Elk", price: 2500, rating: 4.7, email: "info@coloradoelkoutfitter.com"},
-            {name: "Severson Outfitters", city: "Steamboat Springs", state: "CO", species: "Elk", price: 2800, rating: 4.8, email: "info@seversonoutfitters.com"},
-            {name: "Cherokee T.P. Outfitters", city: "Alamosa", state: "CO", species: "Elk", price: 2200, rating: 4.5, email: "info@cherokeetpoutfitters.com"},
-            {name: "Rocky Mountain Outfitters", city: "Boulder", state: "CO", species: "Elk", price: 3000, rating: 4.6, email: "info@rmooc.net"},
-            {name: "Gunnison Country Outfitters", city: "Gunnison", state: "CO", species: "Elk", price: 2600, rating: 4.4, email: "info@gunnisoncountryoutfitters.com"},
-            {name: "Big Horn Outfitters", city: "Lander", state: "WY", species: "Elk", price: 2700, rating: 4.6, email: "contact@bighornoutfitters.com"},
-            {name: "Beaver Trap Outfitters", city: "Lander", state: "WY", species: "Elk", price: 2400, rating: 4.5, email: "info@beavertrapoutfitters.com"},
-            {name: "Wood River Ranch", city: "Casper", state: "WY", species: "Elk", price: 3200, rating: 4.7, email: "info@woodriverranch.com"},
-            {name: "Huntin' Fool Outfitters", city: "Jackson", state: "WY", species: "Elk", price: 3500, rating: 4.8, email: "info@huntinfool.com"},
-            {name: "Cody Wyoming Outfitters", city: "Cody", state: "WY", species: "Elk", price: 2800, rating: 4.5, email: "info@codywyomingoutfitters.com"},
-            {name: "Cavender Whitetail Hunts", city: "Eastland", state: "TX", species: "Deer", price: 2600, rating: 4.5, email: "info@cavenderwhitetailhunts.com"},
-            {name: "Texas Thermal Outfitters", city: "San Antonio", state: "TX", species: "Deer", price: 2400, rating: 4.6, email: "info@texasthermaloutfitters.com"},
-            {name: "Big Texas Deer", city: "Denton", state: "TX", species: "Deer", price: 2200, rating: 4.4, email: "info@bigtexasdeer.com"},
-            {name: "Texas Hunt Ranch", city: "San Antonio", state: "TX", species: "Deer", price: 2800, rating: 4.7, email: "info@texashuntranch.com"},
-            {name: "First Shot Outfitters", city: "Coleman", state: "TX", species: "Deer", price: 2100, rating: 4.3, email: "info@firstshothunts.com"},
-            {name: "Prairie Sky Outfitters", city: "Dodge City", state: "KS", species: "Deer", price: 1900, rating: 4.5, email: "info@prairieskyoutfitters.com"},
-            {name: "Flint Hills Hunting", city: "Hutchinson", state: "KS", species: "Deer", price: 1700, rating: 4.3, email: "info@flinthillshunting.com"},
-            {name: "Sunflower State Outfitters", city: "Salina", state: "KS", species: "Deer", price: 1600, rating: 4.2, email: "info@sunflowerstateoutfitters.com"},
-            {name: "Ohio Deer Adventures", city: "Columbus", state: "OH", species: "Deer", price: 2400, rating: 4.5, email: "inquiries@ohiodeeradventures.com"},
-            {name: "Buckeye Hunting Outfitters", city: "Dayton", state: "OH", species: "Deer", price: 2200, rating: 4.4, email: "info@buckeyehunting.com"},
-            {name: "Great Lakes Hunting Guides", city: "Toledo", state: "OH", species: "Deer", price: 2100, rating: 4.3, email: "info@greatlakeshunting.com"},
-            {name: "Iowa Hunting Guides", city: "Des Moines", state: "IA", species: "Deer", price: 2000, rating: 4.5, email: "info@iowahuntingguides.com"},
-            {name: "Midwest Outfitters", city: "Cedar Rapids", state: "IA", species: "Deer", price: 1900, rating: 4.4, email: "info@midwestoutfitters.com"},
-            {name: "Montana Big Game", city: "Bozeman", state: "MT", species: "Elk", price: 3500, rating: 4.8, email: "book@montanabiggame.com"},
-            {name: "Yellowstone Trophy Hunts", city: "West Yellowstone", state: "MT", species: "Elk", price: 3800, rating: 4.9, email: "info@ythunts.com"},
-            {name: "South Dakota Pheasant", city: "Sioux Falls", state: "SD", species: "Pheasant", price: 1500, rating: 4.6, email: "info@sd-pheasanthunting.com"},
-            {name: "Ranch of the Black Hills", city: "Rapid City", state: "SD", species: "Deer", price: 2400, rating: 4.5, email: "info@ranchblackhills.com"},
-            {name: "Arizona Elk Hunts", city: "Flagstaff", state: "AZ", species: "Elk", price: 2800, rating: 4.5, email: "info@arizonaelkhunts.com"},
-            {name: "High Country Hunts", city: "Prescott", state: "AZ", species: "Elk", price: 2600, rating: 4.4, email: "info@highcountryhunts.com"},
-            {name: "Michigan Waterfowl Guides", city: "Grand Rapids", state: "MI", species: "Waterfowl", price: 2300, rating: 4.4, email: "book@michiganwaterfowlguides.com"},
-            {name: "U.P. Bear Guides", city: "Marquette", state: "MI", species: "Bear", price: 3200, rating: 4.7, email: "info@upbearguides.com"},
-            {name: "Alaska Brown Bear Adventures", city: "Fairbanks", state: "AK", species: "Bear", price: 4500, rating: 4.9, email: "info@alaskabrownbear.com"},
-            {name: "Texas Hog Hunters", city: "Austin", state: "TX", species: "Hog", price: 800, rating: 4.6, email: "info@texashoghunters.com"},
-            {name: "Lone Star Whitetail", city: "San Antonio", state: "TX", species: "Deer", price: 2500, rating: 4.5, email: "info@lonestarwhitetail.com"},
-            {name: "West Texas Trophy Hunts", city: "Lubbock", state: "TX", species: "Deer", price: 3500, rating: 4.9, email: "info@westtexastrophy.com"},
-            {name: "New Mexico Elk Camp", city: "Santa Fe", state: "NM", species: "Elk", price: 3200, rating: 4.7, email: "info@nm-elkcamp.com"},
-            {name: "Oregon Big Game", city: "Bend", state: "OR", species: "Elk", price: 3000, rating: 4.6, email: "info@oregonbiggame.com"},
-            {name: "Washington Trophy Hunts", city: "Seattle", state: "WA", species: "Elk", price: 3400, rating: 4.7, email: "info@watrophyhunts.com"},
-            {name: "Missouri Deer Masters", city: "Kansas City", state: "MO", species: "Deer", price: 2000, rating: 4.4, email: "info@moddeermasters.com"},
-            {name: "Nebraska Pheasant Ranch", city: "Lincoln", state: "NE", species: "Pheasant", price: 1400, rating: 4.5, email: "info@neph hunts.com"},
-            {name: "Idaho Wilderness Hunts", city: "Boise", state: "ID", species: "Elk", price: 3100, rating: 4.8, email: "info@idwhunts.com"},
-            {name: "North Carolina Bear Dogs", city: "Raleigh", state: "NC", species: "Bear", price: 2800, rating: 4.5, email: "info@ncbeardogs.com"},
-            {name: "Virginia Mountain Hunts", city: "Richmond", state: "VA", species: "Deer", price: 2300, rating: 4.4, email: "info@vamountain.com"},
-            {name: "Texas Turkey Guides", city: "Austin", state: "TX", species: "Turkey", price: 1200, rating: 4.5, email: "book@texasturkeyguides.com"},
-            {name: "Kansas Turkey Masters", city: "Wichita", state: "KS", species: "Turkey", price: 1100, rating: 4.4, email: "info@ks turkeys.com"},
-            {name: "Iowa Waterfowl Lodge", city: "Davenport", state: "IA", species: "Waterfowl", price: 1800, rating: 4.6, email: "info@iowawaterfowl.com"},
-            {name: "Mississippi Duck Camp", city: "Jackson", state: "MS", species: "Waterfowl", price: 1600, rating: 4.4, email: "info@msduckcamp.com"}
-        ];
-
-        // Get species from URL
-        const params = new URLSearchParams(window.location.search);
         let speciesFilter = params.get('species') || '';
         
         // Update page title
@@ -161,7 +136,7 @@
                     <p>🎯 ${o.species}</p>
                     <p>Starting price: $${o.price.toLocaleString()}</p>
                     <p>Rating: ${o.rating} ★</p>
-                    <a href="outfitter.html?name=${encodeURIComponent(o.name)}&email=${encodeURIComponent(o.email)}" class="contact-btn">View Profile</a>
+                    <a href="outfitter.html?id=${o.id}" class="contact-btn">View Profile</a>
                 </div>
             `).join('');
         }
@@ -170,9 +145,11 @@
         function filterOutfitters() {
             let filtered = [...allOutfitters];
             
-            // Filter by species (from URL) - case insensitive
-            if (speciesFilter) {
-                filtered = filtered.filter(o => o.species.toLowerCase().includes(speciesFilter.toLowerCase()));
+            // Filter by species (from URL or dropdown) - case insensitive
+            const speciesDropdown = document.getElementById('speciesFilter')?.value || '';
+            const speciesToFilter = speciesFilter || speciesDropdown;
+            if (speciesToFilter) {
+                filtered = filtered.filter(o => o.species.toLowerCase().includes(speciesToFilter.toLowerCase()));
             }
             
             // Filter by state
