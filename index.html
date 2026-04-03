@@ -17,6 +17,7 @@
  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Source+Serif+4:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+ <script src="outfitters.js"></script>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.0/axios.min.js"></script>
  <script src="script.js" defer></script>
  <script src="analytics.js" defer></script>
@@ -587,15 +588,15 @@
  </div>
  <div class="hero-stats">
  <div class="stat-item">
- <div class="stat-num">35+</div>
- <div class="stat-label">Outfitters Listed</div>
+ <div class="stat-num" id="outfitterCount">20+</div>
+ <div class="stat-label">Verified Outfitters</div>
  </div>
  <div class="stat-item">
- <div class="stat-num">18</div>
+ <div class="stat-num" id="stateCount">12</div>
  <div class="stat-label">States Covered</div>
  </div>
  <div class="stat-item">
- <div class="stat-num">10</div>
+ <div class="stat-num" id="speciesCount">8</div>
  <div class="stat-label">Species</div>
  </div>
  </div>
@@ -657,6 +658,15 @@
  </footer>
 
  <script>
+ // ── Load Stats Dynamically ──
+ if (typeof OUTFITTERS !== 'undefined') {
+ const uniqueStates = [...new Set(OUTFITTERS.map(o => o.state))];
+ const uniqueSpecies = [...new Set(OUTFITTERS.flatMap(o => o.species))];
+ document.getElementById('outfitterCount').textContent = OUTFITTERS.length + '+';
+ document.getElementById('stateCount').textContent = uniqueStates.length;
+ document.getElementById('speciesCount').textContent = uniqueSpecies.length;
+ }
+
  // ── Search ──
  function runSearch() {
  const q = document.getElementById('heroSearch').value.trim();
@@ -694,7 +704,24 @@
  });
 
  // ── Map ──
- const mapOutfitters = [
+ const mapOutfitters = typeof OUTFITTERS !== 'undefined' ? OUTFITTERS.map(o => ({
+ name: o.name, lat: o.lat, lng: o.lng, city: o.city + ', ' + o.state, species: o.species[0], email: o.email
+ })) : [
+ {name:"Colorado Elk Outfitter", lat:38.8339, lng:-104.8214, city:"Colorado Springs, CO", species:"Elk"},
+ {name:"Severson Outfitters", lat:40.4658, lng:-106.8317, city:"Steamboat Springs, CO", species:"Elk"},
+ {name:"Big Horn Outfitters", lat:42.5494, lng:-108.8546, city:"Lander, WY", species:"Elk"},
+ {name:"Cavender Whitetail Hunts", lat:32.4015, lng:-98.8206, city:"Eastland, TX", species:"Deer"},
+ {name:"Texas Hunt Ranch", lat:29.4241, lng:-98.4936, city:"San Antonio, TX", species:"Deer"},
+ {name:"Kansas Deer Outfitters", lat:38.5266, lng:-96.7265, city:"Hays, KS", species:"Deer"},
+ {name:"Ohio Deer Adventures", lat:39.9612, lng:-82.9988, city:"Columbus, OH", species:"Deer"},
+ {name:"Iowa Hunting Guides", lat:41.5868, lng:-93.6250, city:"Des Moines, IA", species:"Deer"},
+ {name:"Montana Big Game", lat:45.6770, lng:-111.0389, city:"Bozeman, MT", species:"Elk"},
+ {name:"South Dakota Pheasant", lat:43.5446, lng:-96.7311, city:"Sioux Falls, SD", species:"Pheasant"},
+ {name:"Arizona Elk Hunts", lat:35.1983, lng:-111.6513, city:"Flagstaff, AZ", species:"Elk"},
+ {name:"Michigan Waterfowl Guides", lat:42.9632, lng:-85.6579, city:"Grand Rapids, MI", species:"Waterfowl"},
+ {name:"U.P. Bear Guides", lat:46.5396, lng:-87.4124, city:"Marquette, MI", species:"Bear"},
+ {name:"Alaska Brown Bear Adventures", lat:64.8378, lng:-147.7164, city:"Fairbanks, AK", species:"Bear"},
+ ];
  {name:"Colorado Elk Outfitter, LLC", lat:38.8339, lng:-104.8214, city:"Colorado Springs, CO", species:"Elk"},
  {name:"Severson Outfitters", lat:40.4658, lng:-106.8317, city:"Steamboat Springs, CO",species:"Elk"},
  {name:"Big Horn Outfitters", lat:42.5494, lng:-108.8546, city:"Lander, WY", species:"Elk"},
