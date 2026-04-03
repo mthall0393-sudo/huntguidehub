@@ -46,7 +46,10 @@
             <p>Specialty: <span id="species">{{species}}</span></p>
             <p>Location: <span id="location">{{city}}, {{state}}</span></p>
             <p>Pricing: <span id="priceRange">{{priceRange}}</span></p>
-            <p>Rating: <span id="rating">{{rating}}</span> ★ ({{reviewCount}} reviews)</p>
+            <div class="rating-display">
+                <p>Rating: <span id="rating">{{rating}}</span> ★ (<span id="reviewCount">{{reviewCount}} reviews)</p>
+                <p class="review-source">⭐ Loading from Google...</p>
+            </div>
             <p>Contact: <a href="mailto:{{email}}" id="email">{{email}}</a></p>
         </section>
         <section>
@@ -132,6 +135,26 @@ Thank you for your time!`;
                 emailLink.textContent = email;
                 emailLink.href = `mailto:${email}`;
             }
+        }
+
+        // Google Reviews - Add your API key to enable
+        // Get a free API key at: https://console.cloud.google.com/
+        const GOOGLE_API_KEY = ''; // Add your key here
+        
+        if (GOOGLE_API_KEY && urlParams.get('placeId')) {
+            fetch(`https://maps.googleapis.com/maps/api/place/details/json?place_id=${urlParams.get('placeId')}&fields=name,rating,review,user_ratings_total&key=${GOOGLE_API_KEY}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.result) {
+                        document.getElementById('rating').textContent = data.result.rating || 'N/A';
+                        document.getElementById('reviewCount').textContent = data.result.user_ratings_total || '0';
+                        document.querySelector('.rating-display .review-source').innerHTML = '⭐ <a href="' + (data.result.url || '#') + '" target="_blank">Google Reviews</a>';
+                    }
+                })
+                .catch(err => console.log('Could not load Google Reviews'));
+        } else {
+            // Show placeholder message
+            document.querySelector('.rating-display .review-source').innerHTML = '⭐ <a href="https://search.google.com/search?q=' + encodeURIComponent(outfitterName + ' hunting reviews') + '" target="_blank">View on Google</a>';
         }
     </script>
 </body>
