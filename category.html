@@ -109,8 +109,10 @@
             rating: o.rating || 0,
             email: o.email || '',
             id: o.id
-        })) : [
-            {name: "Colorado Elk Outfitter, LLC", city: "Colorado Springs", state: "CO", species: "Elk", price: 2500, rating: 4.7, email: "info@coloradoelkoutfitter.com"},
+        })) : [];
+        
+        // Get species from URL
+        const params = new URLSearchParams(window.location.search);
         let speciesFilter = params.get('species') || '';
         
         // Update page title
