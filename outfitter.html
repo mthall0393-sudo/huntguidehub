@@ -219,12 +219,27 @@
                 outfitter = OUTFITTERS.find(o => o.id === outfitterId);
             } else if (outfitterName) {
                 console.log('Searching by name:', outfitterName);
-                // Try exact match first, then fuzzy match
+                // Try exact match first, then partial match
                 outfitter = OUTFITTERS.find(o => o.name.toLowerCase() === outfitterName.toLowerCase());
-                console.log('Exact match found:', !!outfitter);
+                console.log('Exact match:', !!outfitter);
+                
+                // Try without "outfitters" suffix
+                if (!outfitter) {
+                    const searchName = outfitterName.toLowerCase().replace(/ outfitters?$/i, '').trim();
+                    outfitter = OUTFITTERS.find(o => o.name.toLowerCase().replace(/ outfitters?$/i, '').trim() === searchName);
+                    console.log('Without suffix:', !!outfitter);
+                }
+                
+                // Try partial match
                 if (!outfitter) {
                     outfitter = OUTFITTERS.find(o => o.name.toLowerCase().includes(outfitterName.toLowerCase()));
-                    console.log('Fuzzy match found:', !!outfitter);
+                    console.log('Partial match:', !!outfitter);
+                }
+                
+                // Try by ID if name search fails
+                if (!outfitter) {
+                    outfitter = OUTFITTERS.find(o => o.id === outfitterName.toLowerCase().replace(/ /g, '-'));
+                    console.log('By ID match:', !!outfitter);
                 }
             }
             console.log('Outfitter found:', outfitter ? outfitter.name : 'null');
