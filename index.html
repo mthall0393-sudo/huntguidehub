@@ -317,8 +317,15 @@
  .species-card:hover::before { transform: scaleX(1); }
 
  .species-icon {
- font-size: 2rem;
- line-height: 1;
+ width: 48px;
+ height: 48px;
+ object-fit: contain;
+ filter: grayscale(100%);
+ transition: filter 0.25s, transform 0.25s;
+ }
+ .species-card:hover .species-icon {
+ filter: grayscale(0%);
+ transform: scale(1.1);
  }
 
  .species-name {
@@ -578,16 +585,16 @@
  <p class="section-label">Browse by Species</p>
  <h2 class="section-title">Choose Your Game</h2>
  <div class="species-grid">
- <a href="category.html?species=hog" class="species-card"><span class="species-icon">🐗</span><span class="species-name">Hog</span></a>
- <a href="category.html?species=deer" class="species-card"><span class="species-icon">🦌</span><span class="species-name">Deer</span></a>
- <a href="category.html?species=elk" class="species-card"><span class="species-icon">🦌</span><span class="species-name">Elk</span></a>
- <a href="category.html?species=turkey" class="species-card"><span class="species-icon">🦃</span><span class="species-name">Turkey</span></a>
- <a href="category.html?species=pheasant" class="species-card"><span class="species-icon">🐦</span><span class="species-name">Pheasant</span></a>
- <a href="category.html?species=waterfowl" class="species-card"><span class="species-icon">🦆</span><span class="species-name">Waterfowl</span></a>
- <a href="category.html?species=bear" class="species-card"><span class="species-icon">🐻</span><span class="species-name">Bear</span></a>
- <a href="category.html?species=antelope" class="species-card"><span class="species-icon">🦌</span><span class="species-name">Antelope</span></a>
- <a href="category.html?species=dove" class="species-card"><span class="species-icon">🕊️</span><span class="species-name">Dove</span></a>
- <a href="category.html?species=muledeer" class="species-card"><span class="species-icon">🦌</span><span class="species-name">Mule Deer</span></a>
+ <a href="category.html?species=hog" class="species-card"><img src="icons/hog.svg" alt="Wild Hog" class="species-icon" /><span class="species-name">Hog</span></a>
+ <a href="category.html?species=deer" class="species-card"><img src="icons/deer.svg" alt="Deer" class="species-icon" /><span class="species-name">Deer</span></a>
+ <a href="category.html?species=elk" class="species-card"><img src="icons/elk.svg" alt="Elk" class="species-icon" /><span class="species-name">Elk</span></a>
+ <a href="category.html?species=turkey" class="species-card"><img src="icons/turkey.svg" alt="Turkey" class="species-icon" /><span class="species-name">Turkey</span></a>
+ <a href="category.html?species=pheasant" class="species-card"><img src="icons/pheasant.svg" alt="Pheasant" class="species-icon" /><span class="species-name">Pheasant</span></a>
+ <a href="category.html?species=waterfowl" class="species-card"><img src="icons/waterfowl.svg" alt="Waterfowl" class="species-icon" /><span class="species-name">Waterfowl</span></a>
+ <a href="category.html?species=bear" class="species-card"><img src="icons/bear.svg" alt="Bear" class="species-icon" /><span class="species-name">Bear</span></a>
+ <a href="category.html?species=antelope" class="species-card"><img src="icons/antelope.svg" alt="Antelope" class="species-icon" /><span class="species-name">Antelope</span></a>
+ <a href="category.html?species=dove" class="species-card"><img src="icons/dove.svg" alt="Dove" class="species-icon" /><span class="species-name">Dove</span></a>
+ <a href="category.html?species=muledeer" class="species-card"><img src="icons/muledeer.svg" alt="Mule Deer" class="species-icon" /><span class="species-name">Mule Deer</span></a>
  </div>
 </section>
 
