@@ -52,6 +52,11 @@ body {font-family:Arial, Helvetica, sans-serif; line-height:1.6; color:#333; bac
 .video-section h2 {margin-bottom:1.5rem;}
 .video-section video {box-shadow:0 4px 20px rgba(0,0,0,0.3);}
 
+/* Filters */
+.filters {padding:1.5rem; background:#f5f5f5; border-bottom:1px solid #ddd;}
+.filters label {font-weight:bold; display:block; margin-bottom:0.5rem;}
+.filters select {padding:0.5rem; border-radius:4px; border:1px solid #ddd; width:100%;}
+
 /* Inquiry Form */
 #inquiryForm {max-width:500px; margin:0 auto;}
 #inquiryForm label {display:block; margin-bottom:0.5rem; font-weight:bold;}
