@@ -193,7 +193,11 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <script>
-        // Get URL parameter (support both ?name= and ?id=)
+        // IMMEDIATE DEBUG - is script loading?
+        console.log('=== OUTFITTER PAGE LOADING ===');
+        console.log('OUTFITTERS exists:', typeof OUTFITTERS !== 'undefined');
+        
+        // Get URL parameter (support both ?name= and ?id=
         const urlParams = new URLSearchParams(window.location.search);
         let outfitterId = urlParams.get('id');
         let outfitterName = urlParams.get('name');
