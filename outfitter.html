@@ -193,23 +193,41 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <script>
+        // Debug: Log what's happening
+        console.log('Page loading...');
+        
         // Get URL parameter (support both ?name= and ?id=)
         const urlParams = new URLSearchParams(window.location.search);
         let outfitterId = urlParams.get('id');
         let outfitterName = urlParams.get('name');
+        
+        // Decode URL-encoded names
+        if (outfitterName) {
+            outfitterName = decodeURIComponent(outfitterName);
+        }
+        
+        console.log('Looking for:', outfitterId || outfitterName);
+        console.log('OUTFITTERS defined:', typeof OUTFITTERS !== 'undefined');
+        console.log('OUTFITTERS length:', OUTFITTERS ? OUTFITTERS.length : 0);
+        
         let outfitter = null;
 
         // Find the outfitter from OUTFITTERS array
-        if (typeof OUTFITTERS !== 'undefined') {
+        if (typeof OUTFITTERS !== 'undefined' && OUTFITTERS) {
             if (outfitterId) {
+                console.log('Searching by ID:', outfitterId);
                 outfitter = OUTFITTERS.find(o => o.id === outfitterId);
             } else if (outfitterName) {
+                console.log('Searching by name:', outfitterName);
                 // Try exact match first, then fuzzy match
                 outfitter = OUTFITTERS.find(o => o.name.toLowerCase() === outfitterName.toLowerCase());
+                console.log('Exact match found:', !!outfitter);
                 if (!outfitter) {
                     outfitter = OUTFITTERS.find(o => o.name.toLowerCase().includes(outfitterName.toLowerCase()));
+                    console.log('Fuzzy match found:', !!outfitter);
                 }
             }
+            console.log('Outfitter found:', outfitter ? outfitter.name : 'null');
         }
 
         // If found, populate all fields
