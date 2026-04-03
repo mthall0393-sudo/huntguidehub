@@ -193,9 +193,11 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <script>
-        // IMMEDIATE DEBUG - is script loading?
-        console.log('=== OUTFITTER PAGE LOADING ===');
-        console.log('OUTFITTERS exists:', typeof OUTFITTERS !== 'undefined');
+        // IMMEDIATE DEBUG - show on page
+        function showDebug(msg) {
+            const el = document.getElementById('outfitterName');
+            if(el) el.textContent = msg;
+        }
         
         // Get URL parameter (support both ?name= and ?id=
         const urlParams = new URLSearchParams(window.location.search);
@@ -209,10 +211,18 @@
         
         let outfitter = null;
         
+        // Show what we're looking for
+        showDebug('Looking for: ' + (outfitterId || outfitterName || 'none'));
+        
         // Check if data loaded
         if (typeof OUTFITTERS === 'undefined' || !OUTFITTERS) {
-            document.getElementById('outfitterName').textContent = 'Data Not Loading';
+            showDebug('ERROR: Data not loaded');
             document.getElementById('description').textContent = 'Error: outfitters.js failed to load. Please refresh the page.';
+        } else if (outfitterId) {
+            // Look up by ID
+            outfitter = OUTFITTERS.find(o => o.id === outfitterId);
+            showDebug('Found by ID: ' + (outfitter ? outfitter.name : 'not found'));
+        } else if (outfitterName) {
         } else if (outfitterId) {
             // Look up by ID
             outfitter = OUTFITTERS.find(o => o.id === outfitterId);
