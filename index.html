@@ -7,6 +7,7 @@
     <title>HuntGuideHub - Find the Best Hunting Outfitters</title>
     <meta name="description" content="Search and compare licensed hunting outfitters across the United States. Get ratings, pricing, and contact info for hog, deer, elk, turkey, pheasant, waterfowl, bear, antelope, dove and mule deer trips." />
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.0/axios.min.js"></script>
     <script defer src="script.js"></script>
     <script type="application/ld+json">
@@ -40,6 +41,7 @@
     </script>
     <meta name="google-site-verification" content="YOUR_VERIFICATION_TOKEN" />
     <script src="analytics.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 <body>
     <header class="site-header">
@@ -85,6 +87,11 @@
             <h2>Featured Outfitters</h2>
             <div class="outfitter-grid" id="featuredGrid"></div>
         </section>
+
+        <section id="map-section" style="padding:2rem;">
+            <h2>Find Outfitters Near You</h2>
+            <div id="map" style="height:500px; width:100%; border-radius:8px; margin-top:1rem;"></div>
+        </section>
     </main>
 
     <footer class="site-footer">
@@ -96,6 +103,7 @@
     </footer>
 
     <script>
+    // Featured outfitters for the card display
     const sampleOutfitters = [
         {name: "Colorado Elk Outfitter, LLC", location: "Colorado Springs, CO", price: "$2500", rating: 4.7, contact: "https://coloradoelkoutfitter.com/"},
         {name: "Cavender Whitetail Hunts", location: "Eastland, TX", price: "$2600", rating: 4.5, contact: "https://www.cavenderwhitetailhunts.com/"},
@@ -110,6 +118,38 @@
         card.className = 'outfitter-card';
         card.innerHTML = '<h3>'+o.name+'</h3><p>'+o.location+'</p><p>Starting price: '+o.price+'</p><p>Rating: '+o.rating+' ★</p><a href="'+o.contact+'" class="contact-btn" target="_blank" rel="noopener">Contact</a>';
         grid.appendChild(card);
+    });
+
+    // Map with outfitter pins
+    const mapOutfitters = [
+        {name: "Colorado Elk Outfitter", lat: 38.8339, lng: -104.8214, city: "Colorado Springs, CO"},
+        {name: "Cavender Whitetail Hunts", lat: 32.4015, lng: -98.8206, city: "Eastland, TX"},
+        {name: "Big Horn Outfitters", lat: 42.5494, lng: -108.8546, city: "Lander, WY"},
+        {name: "Michigan Waterfowl Guides", lat: 42.9632, lng: -85.6579, city: "Grand Rapids, MI"},
+        {name: "Ohio Deer Adventures", lat: 39.9612, lng: -82.9988, city: "Columbus, OH"},
+        {name: "Texas Turkey Guides", lat: 30.2672, lng: -97.7431, city: "Austin, TX"},
+        {name: "Arizona Elk Hunts", lat: 35.1983, lng: -111.6513, city: "Flagstaff, AZ"},
+        {name: "Montana Big Game", lat: 45.6770, lng: -111.0389, city: "Bozeman, MT"},
+        {name: "South Dakota Pheasant", lat: 43.5446, lng: -96.7311, city: "Sioux Falls, SD"},
+        {name: "Kansas Deer Masters", lat: 38.5266, lng: -96.7265, city: "Hays, KS"}
+    ];
+
+    // Initialize map
+    const map = L.map('map').setView([39.8283, -98.5795], 4);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Add markers with popups
+    mapOutfitters.forEach(o => {
+        const popupContent = `
+            <div style="min-width:150px;">
+                <h4 style="margin:0 0 8px 0; color:#2c5f2d;">${o.name}</h4>
+                <p style="margin:0 0 8px 0; font-size:12px;">${o.city}</p>
+                <a href="outfitter.html?name=${encodeURIComponent(o.name)}" style="color:#2c5f2d; font-weight:bold;">View Profile →</a>
+            </div>
+        `;
+        L.marker([o.lat, o.lng]).addTo(map).bindPopup(popupContent);
     });
     </script>
 </body>
