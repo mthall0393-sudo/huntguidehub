@@ -239,40 +239,12 @@
             outfitter = OUTFITTERS.find(o => o.id === outfitterId);
             showDebug('Found by ID: ' + (outfitter ? outfitter.name : 'not found'));
         } else if (outfitterName) {
-        } else if (outfitterId) {
-            // Look up by ID
-            outfitter = OUTFITTERS.find(o => o.id === outfitterId);
-        } else if (outfitterName) {
-            // Look up by name - try various matching approaches
+            // Look up by name
             const nameLower = outfitterName.toLowerCase();
-            
-            // 1. Exact match
             outfitter = OUTFITTERS.find(o => o.name.toLowerCase() === nameLower);
-            
-            // 2. Remove "outfitters" or "outfitter" and try again
-            if (!outfitter) {
-                const baseName = nameLower.replace(/\s+(outfitters?|guides?|guides?)$/i, '').trim();
-                outfitter = OUTFITTERS.find(o => o.name.toLowerCase().replace(/\s+(outfitters?|guides?|guides?)$/i, '').trim() === baseName);
-            }
-            
-            // 3. Partial match - name contains search term
-            if (!outfitter) {
-                outfitter = OUTFITTERS.find(o => o.name.toLowerCase().includes(nameLower) || nameLower.includes(o.name.toLowerCase()));
-            }
-            
-            // 4. Try converting name to ID format
             if (!outfitter) {
                 const idFromName = nameLower.replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
                 outfitter = OUTFITTERS.find(o => o.id === idFromName);
-            }
-            
-            // 5. Debug: list all outfitter names if still not found
-            if (!outfitter) {
-                console.log('=== DEBUG: Available outfitters ===');
-                OUTFITTERS.forEach((o, i) => {
-                    console.log(i + ': ' + o.name + ' (id: ' + o.id + ')');
-                });
-                console.log('=== END DEBUG ===');
             }
         }
 
