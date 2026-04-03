@@ -4,158 +4,385 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Outfitter Profile – {{name}} | HuntGuideHub</title>
-    <meta name="description" content="Details, pricing, reviews and contact information for {{name}}, a licensed hunting outfitter specializing in {{species}} hunts." />
+    <title>Outfitter Profile | HuntGuideHub</title>
+    <meta name="description" content="Details, pricing, reviews and contact information for verified hunting outfitters on HuntGuideHub." />
     <link rel="stylesheet" href="style.css" />
-    <script type="application/ld+json">
+    <script src="outfitters.js"></script>
+    <script type="application/ld+json" id="schemaOrg">
     {
       "@context": "https://schema.org",
       "@type": "LocalBusiness",
-      "name": "{{name}}",
-      "description": "Licensed hunting outfitter specializing in {{species}} hunts.",
+      "name": "Hunting Outfitter",
+      "description": "Licensed hunting outfitter",
       "address": {
         "@type": "PostalAddress",
-        "addressLocality": "{{city}}",
-        "addressRegion": "{{state}}",
+        "addressLocality": "",
+        "addressRegion": "",
         "addressCountry": "US"
       },
-      "telephone": "{{phone}}",
-      "priceRange": "{{priceRange}}",
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "{{rating}}",
-        "reviewCount": "{{reviewCount}}"
-      }
+      "priceRange": "$$"
     }
     </script>
 </head>
 <body>
     <header class="site-header">
-        <h1>Outfitter Profile: <span id="outfitterName">{{name}}</span></h1>
+        <h1>Outfitter Profile</h1>
         <nav>
             <ul>
                 <li><a href="index.html">Home</a></li>
+                <li><a href="states.html">By State</a></li>
+                <li><a href="category.html">By Species</a></li>
+                <li><a href="blog.html">Blog</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
         </nav>
     </header>
+
     <main>
-        <section>
-            <h2>About {{name}}</h2>
-            <p>Specialty: <span id="species">{{species}}</span></p>
-            <p>Location: <span id="location">{{city}}, {{state}}</span></p>
-            <p>Pricing: <span id="priceRange">{{priceRange}}</span></p>
-            <div class="rating-display">
-                <p>Rating: <span id="rating">{{rating}}</span> ★ (<span id="reviewCount">{{reviewCount}} reviews)</p>
-                <p class="review-source">⭐ Loading from Google...</p>
+        <!-- Hero Section -->
+        <section class="outfitter-hero" id="heroSection">
+            <div class="hero-content">
+                <div class="species-badge" id="speciesBadge"></div>
+                <h1 id="outfitterName">Loading...</h1>
+                <p class="location" id="locationDisplay"></p>
+                <div class="rating-display">
+                    <span class="stars" id="stars"></span>
+                    <span class="rating-num" id="ratingNum"></span>
+                    <span class="review-source">(<a href="#" target="_blank" id="googleLink">View on Google</a>)</span>
+                </div>
             </div>
-            <p>Contact: <a href="mailto:{{email}}" id="email">{{email}}</a></p>
         </section>
-        <section>
-            <h3>Reviews</h3>
-            <div id="reviewsPlaceholder">[Reviews would be displayed here]</div>
+
+        <!-- Quick Info Bar -->
+        <section class="quick-info-bar">
+            <div class="quick-item">
+                <span class="label">Location</span>
+                <span class="value" id="cityState"></span>
+            </div>
+            <div class="quick-item">
+                <span class="label">Starting At</span>
+                <span class="value" id="priceDisplay"></span>
+            </div>
+            <div class="quick-item">
+                <span class="label">Land Type</span>
+                <span class="value" id="landType"></span>
+            </div>
+            <div class="quick-item">
+                <span class="label">Success Rate</span>
+                <span class="value" id="successRate"></span>
+            </div>
         </section>
-        <section>
-            <h3>Inquiry Form</h3>
-            <form id="inquiryForm" action="#" method="POST">
-                <label for="visitorName">Your Name</label>
-                <input type="text" id="visitorName" name="visitorName" required />
-                <label for="visitorEmail">Your Email</label>
-                <input type="email" id="visitorEmail" name="visitorEmail" required />
-                <label for="message">Message</label>
-                <textarea id="message" name="message" rows="4" required></textarea>
-                <button type="submit">Send Inquiry</button>
-            </form>
+
+        <!-- Main Content Grid -->
+        <div class="content-grid">
+            <!-- Left Column -->
+            <div class="main-column">
+                <!-- About Section -->
+                <section class="outfitter-section" id="aboutSection">
+                    <h2>About This Outfitter</h2>
+                    <p class="description" id="description"></p>
+                </section>
+
+                <!-- Hunt Details -->
+                <section class="outfitter-section" id="huntDetailsSection">
+                    <h2>Hunt Details</h2>
+                    <div class="detail-grid">
+                        <div class="detail-item">
+                            <span class="label">Species</span>
+                            <span class="value" id="speciesList"></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Methods</span>
+                            <span class="value" id="methodsList"></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Trip Type</span>
+                            <span class="value" id="tripType"></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Seasons</span>
+                            <span class="value" id="seasons"></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Trip Length</span>
+                            <span class="value" id="tripLength"></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Group Size</span>
+                            <span class="value" id="groupSize"></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Lodging</span>
+                            <span class="value" id="lodging"></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Meals Included</span>
+                            <span class="value" id="meals"></span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Highlights -->
+                <section class="outfitter-section" id="highlightsSection">
+                    <h2>Highlights</h2>
+                    <ul class="highlights-list" id="highlightsList"></ul>
+                </section>
+
+                <!-- Tags -->
+                <section class="outfitter-section" id="tagsSection">
+                    <div class="tags-container" id="tagsContainer"></div>
+                </section>
+            </div>
+
+            <!-- Right Column -->
+            <div class="sidebar-column">
+                <!-- CTA Card -->
+                <div class="cta-card">
+                    <h3>Ready to Book?</h3>
+                    <p>Contact <span id="ctaName"></span> directly to check availability for your preferred dates.</p>
+                    <a href="#" class="contact-btn primary" id="websiteBtn" target="_blank">Visit Website →</a>
+                    <a href="mailto:" class="contact-btn secondary" id="emailBtn">Send Email</a>
+                    <p class="note">Expect a response within 24-48 hours</p>
+                </div>
+
+                <!-- Map -->
+                <div class="map-card">
+                    <h3>Location</h3>
+                    <div id="miniMap" style="height: 200px; background: #2a2a2a; border-radius: 8px;"></div>
+                    <p class="coords" id="coords"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Related Outfitters -->
+        <section class="outfitter-section related-outfitters" id="relatedSection">
+            <h2>More Outfitters You Might Like</h2>
+            <div class="outfitter-grid" id="relatedGrid"></div>
         </section>
+
+        <!-- License Info Block -->
+        <section class="license-info" id="licenseSection">
+            <h3>License & Permit Information</h3>
+            <p>This outfitter operates under the following licenses and permits:</p>
+            <ul id="licenseList">
+                <li>State hunting license required (varies by state)</li>
+                <li>Tag draws may be required for big game in some states</li>
+                <li>Federal public land permits where applicable</li>
+            </ul>
+            <p class="disclaimer"><strong>Note:</strong> License requirements change annually. Always verify current requirements with the outfitter and your state's wildlife agency before booking.</p>
+        </section>
+
+        <!-- Back Link -->
+        <div class="back-link">
+            <a href="index.html">← Back to All Outfitters</a>
+        </div>
     </main>
+
     <footer class="site-footer">
         <p>&copy; 2026 HuntGuideHub. All rights reserved.</p>
         <nav>
             <a href="privacy.html">Privacy Policy</a> |
-            <a href="terms.html">Terms of Service</a>
+            <a href="terms.html">Terms of Service</a> |
+            <a href="contact.html">Add Your Outfitter</a>
         </nav>
     </footer>
+
+    <!-- Leaflet CSS & JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
     <script>
-        // Get URL parameters to build the email
+        // Get URL parameter (support both ?name= and ?id=)
         const urlParams = new URLSearchParams(window.location.search);
-        const outfitterName = urlParams.get('name') || 'The Outfitter';
-        let outfitterEmail = urlParams.get('email');
-        
-        // Fallback if no email in URL
-        if (!outfitterEmail) {
-            outfitterEmail = 'info@huntguidehub.com';
-        }
+        let outfitterId = urlParams.get('id');
+        let outfitterName = urlParams.get('name');
+        let outfitter = null;
 
-        document.getElementById('inquiryForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const visitorName = document.getElementById('visitorName').value;
-            const visitorEmail = document.getElementById('visitorEmail').value;
-            const message = document.getElementById('message').value;
-            
-            // Build the email body
-            const emailBody = `Hello,
-
-I found your profile on HuntGuideHub and I'm interested in booking a hunt with you.
-
-My Information:
-- Name: ${visitorName}
-- Email: ${visitorEmail}
-- Message: ${message}
-
----
-This inquiry was sent through HuntGuideHub. If you'd like to list your outfitter services on HuntGuideHub, please visit https://huntguidehub.com/contact
-
-Thank you for your time!`;
-
-            // Create mailto link
-            const subject = encodeURIComponent(`New Inquiry from HuntGuideHub - ${visitorName}`);
-            const body = encodeURIComponent(emailBody);
-            const mailtoLink = `mailto:${outfitterEmail}?subject=${subject}&body=${body}`;
-            
-            // Open email client
-            window.location.href = mailtoLink;
-            
-            alert('Your email client is opening! The outfitter will be notified that your lead came from HuntGuideHub.');
-            this.reset();
-        });
-
-        // Update page title with outfitter name
-        if (urlParams.get('name')) {
-            document.getElementById('outfitterName').textContent = urlParams.get('name');
-            document.title = `Outfitter Profile: ${urlParams.get('name')} | HuntGuideHub`;
-        }
-        
-        // Update email field if passed in URL
-        if (urlParams.get('email')) {
-            const emailLink = document.getElementById('email');
-            if (emailLink) {
-                const email = urlParams.get('email');
-                emailLink.textContent = email;
-                emailLink.href = `mailto:${email}`;
+        // Find the outfitter from OUTFITTERS array
+        if (typeof OUTFITTERS !== 'undefined') {
+            if (outfitterId) {
+                outfitter = OUTFITTERS.find(o => o.id === outfitterId);
+            } else if (outfitterName) {
+                // Try exact match first, then fuzzy match
+                outfitter = OUTFITTERS.find(o => o.name.toLowerCase() === outfitterName.toLowerCase());
+                if (!outfitter) {
+                    outfitter = OUTFITTERS.find(o => o.name.toLowerCase().includes(outfitterName.toLowerCase()));
+                }
             }
         }
 
-        // Google Reviews - Add your API key to enable
-        // Get a free API key at: https://console.cloud.google.com/
-        const GOOGLE_API_KEY = ''; // Add your key here
-        
-        if (GOOGLE_API_KEY && urlParams.get('placeId')) {
-            fetch(`https://maps.googleapis.com/maps/api/place/details/json?place_id=${urlParams.get('placeId')}&fields=name,rating,review,user_ratings_total&key=${GOOGLE_API_KEY}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.result) {
-                        document.getElementById('rating').textContent = data.result.rating || 'N/A';
-                        document.getElementById('reviewCount').textContent = data.result.user_ratings_total || '0';
-                        document.querySelector('.rating-display .review-source').innerHTML = '⭐ <a href="' + (data.result.url || '#') + '" target="_blank">Google Reviews</a>';
-                    }
-                })
-                .catch(err => console.log('Could not load Google Reviews'));
+        // If found, populate all fields
+        if (outfitter) {
+            // Update page title
+            document.title = `${outfitter.name} | HuntGuideHub`;
+            
+            // Hero section
+            document.getElementById('outfitterName').textContent = outfitter.name;
+            document.getElementById('locationDisplay').textContent = `${outfitter.city}, ${outfitter.state}`;
+            
+            // Species badge
+            document.getElementById('speciesBadge').textContent = outfitter.species[0];
+            
+            // Rating
+            const rating = outfitter.rating || 0;
+            const stars = '★'.repeat(Math.floor(rating)) + (rating % 1 >= 0.5 ? '½' : '');
+            document.getElementById('stars').textContent = stars;
+            document.getElementById('ratingNum').textContent = `${rating}/5`;
+            document.getElementById('googleLink').href = `https://search.google.com/search?q=${encodeURIComponent(outfitter.name + ' hunting reviews')}`;
+            
+            // Quick info bar
+            document.getElementById('cityState').textContent = `${outfitter.city}, ${outfitter.stateFull || outfitter.state}`;
+            document.getElementById('priceDisplay').textContent = outfitter.priceStarting ? `$${outfitter.priceStarting.toLocaleString()}` : 'Contact for pricing';
+            document.getElementById('landType').textContent = outfitter.landType || 'Contact for details';
+            document.getElementById('successRate').textContent = outfitter.successRate || 'Varies';
+            
+            // About section
+            document.getElementById('description').textContent = outfitter.description || 'Contact for details.';
+            
+            // Hunt details
+            document.getElementById('speciesList').textContent = outfitter.species ? outfitter.species.join(', ') : 'Contact for details';
+            document.getElementById('methodsList').textContent = outfitter.methods ? outfitter.methods.join(', ') : 'Contact for details';
+            document.getElementById('tripType').textContent = outfitter.tripTypes ? outfitter.tripTypes.join(', ') : 'Contact for details';
+            
+            // Seasons
+            let seasonsText = '';
+            if (outfitter.seasons) {
+                if (typeof outfitter.seasons === 'object') {
+                    seasonsText = Object.entries(outfitter.seasons).map(([k, v]) => `${k}: ${v}`).join('; ');
+                } else {
+                    seasonsText = outfitter.seasons;
+                }
+            }
+            document.getElementById('seasons').textContent = seasonsText || 'Contact for details';
+            
+            document.getElementById('tripLength').textContent = outfitter.tripLength || 'Contact for details';
+            document.getElementById('groupSize').textContent = outfitter.groupSize || 'Contact for details';
+            document.getElementById('lodging').textContent = outfitter.lodgingIncluded ? `${outfitter.lodging} (Included)` : outfitter.lodging || 'Contact for details';
+            document.getElementById('meals').textContent = outfitter.mealsIncluded ? 'Yes' : 'No';
+            
+            // Highlights
+            const highlightsList = document.getElementById('highlightsList');
+            highlightsList.innerHTML = '';
+            if (outfitter.highlights && Array.isArray(outfitter.highlights)) {
+                outfitter.highlights.forEach(h => {
+                    const li = document.createElement('li');
+                    li.textContent = h;
+                    highlightsList.appendChild(li);
+                });
+            }
+            
+            // Tags
+            const tagsContainer = document.getElementById('tagsContainer');
+            tagsContainer.innerHTML = '';
+            if (outfitter.tags && Array.isArray(outfitter.tags)) {
+                outfitter.tags.forEach(tag => {
+                    const span = document.createElement('span');
+                    span.className = 'tag';
+                    span.textContent = tag;
+                    tagsContainer.appendChild(span);
+                });
+            }
+            
+            // CTA card
+            document.getElementById('ctaName').textContent = outfitter.name;
+            if (outfitter.website) {
+                document.getElementById('websiteBtn').href = outfitter.website;
+            } else {
+                document.getElementById('websiteBtn').href = '#';
+                document.getElementById('websiteBtn').textContent = 'Website Coming Soon';
+            }
+            
+            // Email button
+            const emailBtn = document.getElementById('emailBtn');
+            if (outfitter.email) {
+                emailBtn.href = `mailto:${outfitter.email}?subject=Inquiry from HuntGuideHub - ${outfitter.name}`;
+            } else {
+                emailBtn.href = `mailto:info@huntguidehub.com?subject=Inquiry about ${outfitter.name}`;
+            }
+            
+            // Map
+            if (outfitter.lat && outfitter.lng) {
+                document.getElementById('coords').textContent = `Coordinates: ${outfitter.lat}, ${outfitter.lng}`;
+                
+                // Initialize mini map
+                setTimeout(() => {
+                    const miniMap = L.map('miniMap').setView([outfitter.lat, outfitter.lng], 6);
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: '© OpenStreetMap'
+                    }).addTo(miniMap);
+                    
+                    L.marker([outfitter.lat, outfitter.lng]).addTo(miniMap);
+                }, 100);
+            }
+            
+            // Update Schema.org
+            const schemaEl = document.getElementById('schemaOrg');
+            const schemaData = {
+                "@context": "https://schema.org",
+                "@type": "LocalBusiness",
+                "name": outfitter.name,
+                "description": outfitter.description,
+                "address": {
+                    "@type": "PostalAddress",
+                    "addressLocality": outfitter.city,
+                    "addressRegion": outfitter.state,
+                    "addressCountry": "US"
+                },
+                "priceRange": outfitter.priceStarting ? `$${outfitter.priceStarting}+` : "$$$"
+            };
+            schemaEl.textContent = JSON.stringify(schemaData, null, 2);
+            
+            // Load related outfitters (same species or state)
+            loadRelatedOutfitters(outfitter);
+            
         } else {
-            // Show placeholder message
-            document.querySelector('.rating-display .review-source').innerHTML = '⭐ <a href="https://search.google.com/search?q=' + encodeURIComponent(outfitterName + ' hunting reviews') + '" target="_blank">View on Google</a>';
+            // Outfitter not found - show error
+            document.getElementById('outfitterName').textContent = 'Outfitter Not Found';
+            document.getElementById('locationDisplay').textContent = '';
+            document.getElementById('description').textContent = 'We couldn\\'t find this outfitter in our database. They may have been removed or the link may be incorrect. Try browsing our other outfitters below.';
         }
+
+        // Function to load related outfitters
+        function loadRelatedOutfitters(current) {
+            if (typeof OUTFITTERS === 'undefined') return;
+            
+            // Find related: same species or same state (exclude current)
+            const related = OUTFITTERS.filter(o => {
+                if (o.id === current.id) return false;
+                const sameSpecies = o.species && current.species && o.species.some(s => current.species.includes(s));
+                const sameState = o.state === current.state;
+                return sameSpecies || sameState;
+            }).slice(0, 3);
+            
+            const grid = document.getElementById('relatedGrid');
+            grid.innerHTML = '';
+            
+            if (related.length === 0) {
+                document.getElementById('relatedSection').style.display = 'none';
+                return;
+            }
+            
+            related.forEach(o => {
+                const card = document.createElement('div');
+                card.className = 'outfitter-card';
+                card.innerHTML = `
+                    <div class="card-species">${o.species[0]}</div>
+                    <h3>${o.name}</h3>
+                    <p class="card-location">${o.city}, ${o.state}</p>
+                    <p class="card-price">From $${o.priceStarting?.toLocaleString() || 'Contact'}</p>
+                    <div class="card-rating">★ ${o.rating || 'N/A'}</div>
+                    <a href="outfitter.html?id=${o.id}" class="card-link">View Profile →</a>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Inquiry form handler
+        document.getElementById('inquiryForm')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Please use the email or website links to contact the outfitter directly.');
+        });
     </script>
 </body>
 </html>
