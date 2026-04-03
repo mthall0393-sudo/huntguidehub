@@ -17,6 +17,22 @@
  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Source+Serif+4:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.0/axios.min.js"></script>
+ <script src="script.js" defer></script>
+ <script src="analytics.js" defer></script>
+ <script type="application/ld+json">
+ {
+   "@context": "https://schema.org",
+   "@type": "WebSite",
+   "name": "HuntGuideHub",
+   "url": "https://mthall0393-sudo.github.io/huntguidehub/",
+   "potentialAction": {
+     "@type": "SearchAction",
+     "target": "https://mthall0393-sudo.github.io/huntguidehub/category.html?q={search_term_string}",
+     "query-input": "required name=search_term_string"
+   }
+ }
+ </script>
 
  <style>
  :root {
@@ -455,7 +471,7 @@
  width: 100%;
  border-radius: 2px;
  margin-top: 1.5rem;
- border: 1px solid var(--bronze);
+ border: 1px solid rgba(255,255,255,0.06);
  background: #f5f0e8;
  }
 
@@ -655,9 +671,6 @@
  {name:"Colorado Elk Outfitter, LLC", location:"Colorado Springs, CO", species:"Elk", price:"$2,500", rating:4.7, contact:"https://coloradoelkoutfitter.com/"},
  {name:"Cavender Whitetail Hunts", location:"Eastland, TX", species:"Deer", price:"$2,600", rating:4.5, contact:"https://www.cavenderwhitetailhunts.com/"},
  {name:"Big Horn Outfitters", location:"Lander, WY", species:"Elk", price:"$2,700", rating:4.6, contact:"https://www.bighornoutfitters.com/wyoming-elk-hunting/"},
- {name:"Michigan Waterfowl Guides", location:"Grand Rapids, MI", species:"Waterfowl",price:"$2,300", rating:4.4, contact:"https://michiganwaterfowlguides.com/"},
- {name:"Ohio Deer Adventures", location:"Columbus, OH", species:"Deer", price:"$2,400", rating:4.5, contact:"https://ohiodeeradventures.com/"},
- {name:"Texas Turkey Guides", location:"Austin, TX", species:"Turkey", price:"$2,500", rating:4.5, contact:"https://texasturkeyguides.com/"},
  ];
 
  const speciesMap = {"Elk":"#7a4e2b","Deer":"#4a6b3a","Waterfowl":"#2b4a6b","Turkey":"#6b4a2b","Bear":"#5a3a2b","Pheasant":"#6b5a2b"};
