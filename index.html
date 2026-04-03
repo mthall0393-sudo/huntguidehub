@@ -705,7 +705,7 @@
 
  // ── Map ──
  const mapOutfitters = typeof OUTFITTERS !== 'undefined' ? OUTFITTERS.map(o => ({
- name: o.name, lat: o.lat, lng: o.lng, city: o.city + ', ' + o.state, species: o.species[0], email: o.email
+ name: o.name, lat: o.lat, lng: o.lng, city: o.city + ', ' + o.state, species: o.species, email: o.email, id: o.id
  })) : [
  {name:"Colorado Elk Outfitter", lat:38.8339, lng:-104.8214, city:"Colorado Springs, CO", species:"Elk"},
  {name:"Severson Outfitters", lat:40.4658, lng:-106.8317, city:"Steamboat Springs, CO", species:"Elk"},
@@ -740,10 +740,10 @@
  });
  L.marker([o.lat, o.lng], {icon}).addTo(map).bindPopup(`
  <div style="font-family:'Oswald',sans-serif;min-width:180px;padding:4px;">
- <div style="font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:${color};margin-bottom:4px;">${o.species}</div>
+ <div style="font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:${color};margin-bottom:4px;">${Array.isArray(o.species) ? o.species.join(', ') : o.species}</div>
  <div style="font-size:15px;font-weight:600;color:#1a1410;margin-bottom:3px;">${o.name}</div>
  <div style="font-size:11px;color:#666;">📍 ${o.city}</div>
- <a href="outfitter.html?name=${encodeURIComponent(o.name)}" style="display:inline-block;margin-top:8px;font-size:11px;color:${color};font-weight:600;">View Profile →</a>
+ <a href="outfitter.html?id=${o.id}" style="display:inline-block;margin-top:8px;font-size:11px;color:${color};font-weight:600;">View Profile →</a>
  </div>
  `);
  });
