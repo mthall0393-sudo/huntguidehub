@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>HuntGuideHub - Find the Best Hunting Outfitters</title>
     <meta name="description" content="Search and compare licensed hunting outfitters across the United States. Get ratings, pricing, and contact info for hog, deer, elk, turkey, pheasant, waterfowl, bear, antelope, dove and mule deer trips." />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Source+Serif+4:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.0/axios.min.js"></script>
@@ -59,115 +61,132 @@
     </header>
 
     <main>
-        <section class="hero" style="position:relative; overflow:hidden; text-align:center; color:#fff; min-height:70vh; display:flex; align-items:center; justify-content:center;">
-            <video autoplay muted loop playsinline style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:0;">
+        <section class="hero">
+            <video autoplay muted loop playsinline>
                 <source src="https://assets.mixkit.co/videos/preview/mixkit-deer-eating-grass-in-the-wild-41637-large.mp4" type="video/mp4">
             </video>
-            <div style="position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.55); z-index:1;"></div>
-            <div style="position:relative; z-index:2; padding:120px 20px;">
-                <h2 style="font-size:2.5rem; margin-bottom:1rem;">Find the Perfect Outfitter for Your Next Hunt</h2>
+            <div class="overlay"></div>
+            <div class="content">
+                <h2>Find Your<br>Next Hunt<em>the outfitter directory for serious hunters</em></h2>
+                <div class="hero-search">
+                    <input type="text" id="heroSearch" placeholder="Search by species, state, or outfitter…" />
+                    <button onclick="runSearch()">Search</button>
+                </div>
             </div>
         </section>
 
         <section id="categories" class="category-grid">
-            <h2>Browse by Species</h2>
+            <p class="section-label">Browse by Species</p>
+            <h2 class="section-title">Choose Your Game</h2>
             <div class="grid">
-                <a href="category.html?species=hog" class="category-card">Hog</a>
-                <a href="category.html?species=deer" class="category-card">Deer</a>
-                <a href="category.html?species=elk" class="category-card">Elk</a>
-                <a href="category.html?species=turkey" class="category-card">Turkey</a>
-                <a href="category.html?species=pheasant" class="category-card">Pheasant</a>
-                <a href="category.html?species=waterfowl" class="category-card">Waterfowl</a>
-                <a href="category.html?species=bear" class="category-card">Bear</a>
-                <a href="category.html?species=antelope" class="category-card">Antelope</a>
-                <a href="category.html?species=dove" class="category-card">Dove</a>
-                <a href="category.html?species=muledeer" class="category-card">Mule Deer</a>
+                <a href="category.html?species=hog" class="category-card"><span class="species-icon">🐗</span><span class="species-name">Hog</span></a>
+                <a href="category.html?species=deer" class="category-card"><span class="species-icon">🦌</span><span class="species-name">Deer</span></a>
+                <a href="category.html?species=elk" class="category-card"><span class="species-icon">🦌</span><span class="species-name">Elk</span></a>
+                <a href="category.html?species=turkey" class="category-card"><span class="species-icon">🦃</span><span class="species-name">Turkey</span></a>
+                <a href="category.html?species=pheasant" class="category-card"><span class="species-icon">🐦</span><span class="species-name">Pheasant</span></a>
+                <a href="category.html?species=waterfowl" class="category-card"><span class="species-icon">🦆</span><span class="species-name">Waterfowl</span></a>
+                <a href="category.html?species=bear" class="category-card"><span class="species-icon">🐻</span><span class="species-name">Bear</span></a>
+                <a href="category.html?species=antelope" class="category-card"><span class="species-icon">🦌</span><span class="species-name">Antelope</span></a>
+                <a href="category.html?species=dove" class="category-card"><span class="species-icon">🕊️</span><span class="species-name">Dove</span></a>
+                <a href="category.html?species=muledeer" class="category-card"><span class="species-icon">🦌</span><span class="species-name">Mule Deer</span></a>
             </div>
         </section>
 
         <section class="featured-outfitters">
-            <h2>Featured Outfitters</h2>
+            <p class="section-label">Featured Outfitters</p>
+            <h2 class="section-title">Trusted Guides</h2>
             <div class="outfitter-grid" id="featuredGrid"></div>
         </section>
 
-        <section id="map-section" style="padding:2rem;">
-            <h2>Find Outfitters Near You</h2>
-            <div id="map" style="height:500px; width:100%; border-radius:8px; margin-top:1rem;"></div>
+        <section id="map-section">
+            <p class="section-label">Find Outfitters Near You</p>
+            <h2 class="section-title">Explore the Map</h2>
+            <div id="map"></div>
         </section>
     </main>
 
     <footer class="site-footer">
-        <p>&copy; 2026 HuntGuideHub. All rights reserved.</p>
+        <div>
+            <h1 style="font-family:'Oswald',sans-serif; font-size:1.4rem; color:var(--amber);">HuntGuideHub</h1>
+            <p>&copy; 2026 HuntGuideHub. All rights reserved.</p>
+        </div>
         <nav>
-            <a href="privacy.html">Privacy Policy</a> |
+            <a href="privacy.html">Privacy Policy</a>
             <a href="terms.html">Terms of Service</a>
         </nav>
     </footer>
 
     <script>
+    // Search function
+    function runSearch() {
+        const q = document.getElementById('heroSearch').value.trim();
+        if (q) window.location.href = 'category.html?q=' + encodeURIComponent(q);
+    }
+    document.getElementById('heroSearch').addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') runSearch();
+    });
+
     // Featured outfitters for the card display
     const sampleOutfitters = [
-        {name: "Colorado Elk Outfitter, LLC", location: "Colorado Springs, CO", price: "$2500", rating: 4.7, contact: "https://coloradoelkoutfitter.com/"},
-        {name: "Cavender Whitetail Hunts", location: "Eastland, TX", price: "$2600", rating: 4.5, contact: "https://www.cavenderwhitetailhunts.com/"},
-        {name: "Big Horn Outfitters", location: "Lander, WY", price: "$2700", rating: 4.6, contact: "https://www.bighornoutfitters.com/wyoming-elk-hunting/"},
-        {name: "Michigan Waterfowl Guides", location: "Grand Rapids, MI", price: "$2300", rating: 4.4, contact: "https://michiganwaterfowlguides.com/"},
-        {name: "Ohio Deer Adventures", location: "Columbus, OH", price: "$2400", rating: 4.5, contact: "https://ohiodeeradventures.com/"},
-        {name: "Texas Turkey Guides", location: "Austin, TX", price: "$2500", rating: 4.5, contact: "https://texasturkeyguides.com/"}
+        {name: "Colorado Elk Outfitter, LLC", location: "Colorado Springs, CO", species: "Elk", price: "$2500", rating: 4.7, contact: "https://coloradoelkoutfitter.com/"},
+        {name: "Cavender Whitetail Hunts", location: "Eastland, TX", species: "Deer", price: "$2600", rating: 4.5, contact: "https://www.cavenderwhitetailhunts.com/"},
+        {name: "Big Horn Outfitters", location: "Lander, WY", species: "Elk", price: "$2700", rating: 4.6, contact: "https://www.bighornoutfitters.com/wyoming-elk-hunting/"},
+        {name: "Michigan Waterfowl Guides", location: "Grand Rapids, MI", species: "Waterfowl", price: "$2300", rating: 4.4, contact: "https://michiganwaterfowlguides.com/"},
+        {name: "Ohio Deer Adventures", location: "Columbus, OH", species: "Deer", price: "$2400", rating: 4.5, contact: "https://ohiodeeradventures.com/"},
+        {name: "Texas Turkey Guides", location: "Austin, TX", species: "Turkey", price: "$2500", rating: 4.5, contact: "https://texasturkeyguides.com/"}
     ];
     const grid = document.getElementById('featuredGrid');
     sampleOutfitters.forEach(o => {
         const card = document.createElement('div');
         card.className = 'outfitter-card';
-        card.innerHTML = '<h3>'+o.name+'</h3><p>'+o.location+'</p><p>Starting price: '+o.price+'</p><p>Rating: '+o.rating+' ★</p><a href="'+o.contact+'" class="contact-btn" target="_blank" rel="noopener">Contact</a>';
+        card.innerHTML = `
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:1.25rem;">
+                <span class="outfitter-badge">${o.species || 'Outfitter'}</span>
+                <span style="font-family:'Oswald',sans-serif; font-size:0.9rem; color:var(--amber);">${o.rating} ★</span>
+            </div>
+            <h3>${o.name}</h3>
+            <p style="font-size:0.8rem; color:var(--stone); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:1.25rem;">📍 ${o.location}</p>
+            <p style="font-family:'Oswald',sans-serif; font-size:1.4rem; color:var(--amber); margin-bottom:1.5rem;">${o.price} <span style="font-size:0.75rem; color:var(--stone); font-weight:400;">/ starting price</span></p>
+            <a href="${o.contact}" class="contact-btn" target="_blank" rel="noopener">View Outfitter →</a>
+        `;
         grid.appendChild(card);
     });
 
     // Map with all outfitters
     const mapOutfitters = [
-        // Colorado
         {name: "Colorado Elk Outfitter, LLC", lat: 38.8339, lng: -104.8214, city: "Colorado Springs, CO", email: "info@coloradoelkoutfitter.com", species: "Elk"},
         {name: "Severson Outfitters", lat: 40.4658, lng: -106.8317, city: "Steamboat Springs, CO", email: "info@seversonoutfitters.com", species: "Elk"},
         {name: "Cherokee T.P. Outfitters", lat: 37.5947, lng: -105.8703, city: "Alamosa, CO", email: "info@cherokeetpoutfitters.com", species: "Elk"},
         {name: "Rocky Mountain Outfitters", lat: 40.0150, lng: -105.2705, city: "Boulder, CO", email: "info@rmooc.net", species: "Elk"},
         {name: "Gunnison Country Outfitters", lat: 38.2008, lng: -106.9312, city: "Gunnison, CO", email: "info@gunnisoncountryoutfitters.com", species: "Elk"},
         {name: "Colorado Big Game Outfitters", lat: 37.2690, lng: -107.8820, city: "Durango, CO", email: "info@coloradobiggameoutfitters.com", species: "Elk"},
-        // Wyoming
         {name: "Big Horn Outfitters", lat: 42.5494, lng: -108.8546, city: "Lander, WY", email: "contact@bighornoutfitters.com", species: "Elk"},
         {name: "Beaver Trap Outfitters", lat: 42.5494, lng: -108.8546, city: "Lander, WY", email: "info@beavertrapoutfitters.com", species: "Elk"},
         {name: "Wood River Ranch", lat: 42.8666, lng: -106.3130, city: "Casper, WY", email: "info@woodriverranch.com", species: "Elk"},
         {name: "Huntin' Fool Outfitters", lat: 43.4799, lng: -110.7624, city: "Jackson, WY", email: "info@huntinfool.com", species: "Elk"},
         {name: "Cody Wyoming Outfitters", lat: 44.5261, lng: -109.0576, city: "Cody, WY", email: "info@codywyomingoutfitters.com", species: "Elk"},
-        // Texas
         {name: "Cavender Whitetail Hunts", lat: 32.4015, lng: -98.8206, city: "Eastland, TX", email: "info@cavenderwhitetailhunts.com", species: "Deer"},
         {name: "Texas Thermal Outfitters", lat: 29.4241, lng: -98.4936, city: "San Antonio, TX", email: "info@texasthermaloutfitters.com", species: "Deer"},
         {name: "Big Texas Deer", lat: 33.2148, lng: -97.1331, city: "Denton, TX", email: "info@bigtexasdeer.com", species: "Deer"},
         {name: "Texas Hunt Ranch", lat: 29.4241, lng: -98.4936, city: "San Antonio, TX", email: "info@texashuntranch.com", species: "Deer"},
         {name: "First Shot Outfitters", lat: 31.8288, lng: -99.3101, city: "Coleman, TX", email: "info@firstshothunts.com", species: "Deer"},
-        // Kansas
         {name: "Kansas Deer Outfitters", lat: 38.5266, lng: -96.7265, city: "Hays, KS", email: "info@kspheasant.com", species: "Deer"},
         {name: "Prairie Sky Outfitters", lat: 37.7631, lng: -100.0174, city: "Dodge City, KS", email: "info@prairieskyoutfitters.com", species: "Deer"},
         {name: "Flint Hills Hunting", lat: 38.0562, lng: -97.9237, city: "Hutchinson, KS", email: "info@flinthillshunting.com", species: "Deer"},
         {name: "Sunflower State Outfitters", lat: 38.8203, lng: -97.6114, city: "Salina, KS", email: "info@sunflowerstateoutfitters.com", species: "Deer"},
-        // Ohio
         {name: "Ohio Deer Adventures", lat: 39.9612, lng: -82.9988, city: "Columbus, OH", email: "inquiries@ohiodeeradventures.com", species: "Deer"},
         {name: "Buckeye Hunting Outfitters", lat: 39.7589, lng: -84.1916, city: "Dayton, OH", email: "info@buckeyehunting.com", species: "Deer"},
         {name: "Great Lakes Hunting Guides", lat: 41.6528, lng: -83.5379, city: "Toledo, OH", email: "info@greatlakeshunting.com", species: "Deer"},
-        // Iowa
         {name: "Iowa Hunting Guides", lat: 41.5868, lng: -93.6250, city: "Des Moines, IA", email: "info@iowahuntingguides.com", species: "Deer"},
         {name: "Midwest Outfitters", lat: 41.9779, lng: -91.6656, city: "Cedar Rapids, IA", email: "info@midwestoutfitters.com", species: "Deer"},
-        // Montana
         {name: "Montana Big Game", lat: 45.6770, lng: -111.0389, city: "Bozeman, MT", email: "book@montanabiggame.com", species: "Elk"},
         {name: "Yellowstone Trophy Hunts", lat: 45.0030, lng: -110.6711, city: "West Yellowstone, MT", email: "info@ythunts.com", species: "Elk"},
-        // South Dakota
         {name: "South Dakota Pheasant", lat: 43.5446, lng: -96.7311, city: "Sioux Falls, SD", email: "info@sd-pheasanthunting.com", species: "Pheasant"},
         {name: "Ranch of the Black Hills", lat: 44.0805, lng: -103.2314, city: "Rapid City, SD", email: "info@ranchblackhills.com", species: "Deer"},
-        // Arizona
         {name: "Arizona Elk Hunts", lat: 35.1983, lng: -111.6513, city: "Flagstaff, AZ", email: "info@arizonaelkhunts.com", species: "Elk"},
         {name: "High Country Hunts", lat: 34.4487, lng: -111.7894, city: "Prescott, AZ", email: "info@highcountryhunts.com", species: "Elk"},
-        // Michigan
         {name: "Michigan Waterfowl Guides", lat: 42.9632, lng: -85.6579, city: "Grand Rapids, MI", email: "book@michiganwaterfowlguides.com", species: "Waterfowl"},
         {name: "U.P. Bear Guides", lat: 46.5396, lng: -87.4124, city: "Marquette, MI", email: "info@upbearguides.com", species: "Bear"},
-        // Alaska
         {name: "Alaska Brown Bear Adventures", lat: 64.8378, lng: -147.7164, city: "Fairbanks, AK", email: "info@alaskabrownbear.com", species: "Bear"},
         {name: "Delta Junction Hunts", lat: 64.0522, lng: -145.7273, city: "Delta Junction, AK", email: "info@deltajunctionhunts.com", species: "Moose"}
     ];
@@ -178,17 +197,30 @@
         attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
 
+    // Species colors for markers
+    const speciesColors = {
+        Elk: '#c17f3b', Deer: '#5a6e4a', Waterfowl: '#3b6e8c', Bear: '#8c4a3b', Pheasant: '#8c7a3b', Moose: '#6b5a3b'
+    };
+
     // Add markers with popups
     mapOutfitters.forEach(o => {
+        const color = speciesColors[o.species] || '#8c8278';
+        const icon = L.divIcon({
+            className: '',
+            html: `<div style="width:12px;height:12px;background:${color};border:2px solid #fdfbf7;border-radius:50%;box-shadow:0 0 6px rgba(0,0,0,0.5);"></div>`,
+            iconSize: [12, 12],
+            iconAnchor: [6, 6]
+        });
+        
         const popupContent = `
             <div style="min-width:180px;">
-                <h4 style="margin:0 0 5px 0; color:#2c5f2d;">${o.name}</h4>
+                <h4 style="margin:0 0 5px 0; color:#c17f3b;">${o.name}</h4>
                 <p style="margin:0 0 3px 0; font-size:12px;">📍 ${o.city}</p>
                 <p style="margin:0 0 8px 0; font-size:11px; color:#666;">🎯 ${o.species}</p>
-                <a href="outfitter.html?name=${encodeURIComponent(o.name)}&email=${encodeURIComponent(o.email)}" style="color:#2c5f2d; font-weight:bold;">View Profile →</a>
+                <a href="outfitter.html?name=${encodeURIComponent(o.name)}&email=${encodeURIComponent(o.email)}" style="color:#c17f3b; font-weight:bold;">View Profile →</a>
             </div>
         `;
-        L.marker([o.lat, o.lng]).addTo(map).bindPopup(popupContent);
+        L.marker([o.lat, o.lng], { icon }).addTo(map).bindPopup(popupContent);
     });
     </script>
 </body>
