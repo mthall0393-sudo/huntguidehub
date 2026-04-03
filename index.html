@@ -120,18 +120,18 @@
         grid.appendChild(card);
     });
 
-    // Map with outfitter pins
+    // Map with outfitter pins (includes email for inquiry form)
     const mapOutfitters = [
-        {name: "Colorado Elk Outfitter", lat: 38.8339, lng: -104.8214, city: "Colorado Springs, CO"},
-        {name: "Cavender Whitetail Hunts", lat: 32.4015, lng: -98.8206, city: "Eastland, TX"},
-        {name: "Big Horn Outfitters", lat: 42.5494, lng: -108.8546, city: "Lander, WY"},
-        {name: "Michigan Waterfowl Guides", lat: 42.9632, lng: -85.6579, city: "Grand Rapids, MI"},
-        {name: "Ohio Deer Adventures", lat: 39.9612, lng: -82.9988, city: "Columbus, OH"},
-        {name: "Texas Turkey Guides", lat: 30.2672, lng: -97.7431, city: "Austin, TX"},
-        {name: "Arizona Elk Hunts", lat: 35.1983, lng: -111.6513, city: "Flagstaff, AZ"},
-        {name: "Montana Big Game", lat: 45.6770, lng: -111.0389, city: "Bozeman, MT"},
-        {name: "South Dakota Pheasant", lat: 43.5446, lng: -96.7311, city: "Sioux Falls, SD"},
-        {name: "Kansas Deer Masters", lat: 38.5266, lng: -96.7265, city: "Hays, KS"}
+        {name: "Colorado Elk Outfitter", lat: 38.8339, lng: -104.8214, city: "Colorado Springs, CO", email: "info@coloradoelkoutfitter.com"},
+        {name: "Cavender Whitetail Hunts", lat: 32.4015, lng: -98.8206, city: "Eastland, TX", email: "info@cavenderwhitetailhunts.com"},
+        {name: "Big Horn Outfitters", lat: 42.5494, lng: -108.8546, city: "Lander, WY", email: "contact@bighornoutfitters.com"},
+        {name: "Michigan Waterfowl Guides", lat: 42.9632, lng: -85.6579, city: "Grand Rapids, MI", email: "book@michiganwaterfowlguides.com"},
+        {name: "Ohio Deer Adventures", lat: 39.9612, lng: -82.9988, city: "Columbus, OH", email: "inquiries@ohiodeeradventures.com"},
+        {name: "Texas Turkey Guides", lat: 30.2672, lng: -97.7431, city: "Austin, TX", email: "book@texasturkeyguides.com"},
+        {name: "Arizona Elk Hunts", lat: 35.1983, lng: -111.6513, city: "Flagstaff, AZ", email: "info@arizonaelkhunts.com"},
+        {name: "Montana Big Game", lat: 45.6770, lng: -111.0389, city: "Bozeman, MT", email: "book@montanabiggame.com"},
+        {name: "South Dakota Pheasant", lat: 43.5446, lng: -96.7311, city: "Sioux Falls, SD", email: "info@sd pheasanthunting.com"},
+        {name: "Kansas Deer Masters", lat: 38.5266, lng: -96.7265, city: "Hays, KS", email: "book@ksdeermasters.com"}
     ];
 
     // Initialize map
@@ -146,7 +146,7 @@
             <div style="min-width:150px;">
                 <h4 style="margin:0 0 8px 0; color:#2c5f2d;">${o.name}</h4>
                 <p style="margin:0 0 8px 0; font-size:12px;">${o.city}</p>
-                <a href="outfitter.html?name=${encodeURIComponent(o.name)}" style="color:#2c5f2d; font-weight:bold;">View Profile →</a>
+                <a href="outfitter.html?name=${encodeURIComponent(o.name)}&email=${encodeURIComponent(o.email)}" style="color:#2c5f2d; font-weight:bold;">View Profile →</a>
             </div>
         `;
         L.marker([o.lat, o.lng]).addTo(map).bindPopup(popupContent);

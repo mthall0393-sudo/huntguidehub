@@ -74,11 +74,65 @@
         </nav>
     </footer>
     <script>
-        document.getElementById('inquiryForm').addEventListener('submit', function(e){
+        // Get URL parameters to build the email
+        const urlParams = new URLSearchParams(window.location.search);
+        const outfitterName = urlParams.get('name') || 'The Outfitter';
+        let outfitterEmail = urlParams.get('email');
+        
+        // Fallback if no email in URL
+        if (!outfitterEmail) {
+            outfitterEmail = 'info@huntguidehub.com';
+        }
+
+        document.getElementById('inquiryForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            alert('Inquiry sent! (placeholder)');
+            
+            const visitorName = document.getElementById('visitorName').value;
+            const visitorEmail = document.getElementById('visitorEmail').value;
+            const message = document.getElementById('message').value;
+            
+            // Build the email body
+            const emailBody = `Hello,
+
+I found your profile on HuntGuideHub and I'm interested in booking a hunt with you.
+
+My Information:
+- Name: ${visitorName}
+- Email: ${visitorEmail}
+- Message: ${message}
+
+---
+This inquiry was sent through HuntGuideHub. If you'd like to list your outfitter services on HuntGuideHub, please visit https://huntguidehub.com/contact
+
+Thank you for your time!`;
+
+            // Create mailto link
+            const subject = encodeURIComponent(`New Inquiry from HuntGuideHub - ${visitorName}`);
+            const body = encodeURIComponent(emailBody);
+            const mailtoLink = `mailto:${outfitterEmail}?subject=${subject}&body=${body}`;
+            
+            // Open email client
+            window.location.href = mailtoLink;
+            
+            alert('Your email client is opening! The outfitter will be notified that your lead came from HuntGuideHub.');
             this.reset();
         });
+
+        // Update page title with outfitter name
+        if (urlParams.get('name')) {
+            document.getElementById('outfitterName').textContent = urlParams.get('name');
+            document.title = `Outfitter Profile: ${urlParams.get('name')} | HuntGuideHub`;
+        }
+        
+        // Update email field if passed in URL
+        if (urlParams.get('email')) {
+            const emailLink = document.getElementById('email');
+            if (emailLink) {
+                const email = urlParams.get('email');
+                emailLink.textContent = email;
+                emailLink.href = `mailto:${email}`;
+            }
+        }
     </script>
 </body>
 </html>
