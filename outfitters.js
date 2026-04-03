@@ -1317,3 +1317,6 @@ tags: ["Featured", "Verified"]
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = { OUTFITTERS };
 }
+
+// Make globally available
+window.OUTFITTERS = OUTFITTERS;
