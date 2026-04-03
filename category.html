@@ -177,9 +177,9 @@
         function filterOutfitters() {
             let filtered = [...allOutfitters];
             
-            // Filter by species (from URL)
+            // Filter by species (from URL) - case insensitive
             if (speciesFilter) {
-                filtered = filtered.filter(o => o.species.toLowerCase() === speciesFilter.toLowerCase());
+                filtered = filtered.filter(o => o.species.toLowerCase().includes(speciesFilter.toLowerCase()));
             }
             
             // Filter by state
@@ -214,8 +214,8 @@
         // Event listeners
         document.getElementById('applyFilters').addEventListener('click', filterOutfitters);
         
-        // Initial render
-        renderOutfitters(allOutfitters.filter(o => !speciesFilter || o.species.toLowerCase() === speciesFilter.toLowerCase()));
+        // Initial render - case insensitive
+        renderOutfitters(allOutfitters.filter(o => !speciesFilter || o.species.toLowerCase().includes(speciesFilter.toLowerCase())));
     </script>
 </body>
 </html>
