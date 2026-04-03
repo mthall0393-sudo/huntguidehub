@@ -193,9 +193,6 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <script>
-        // Debug: Log what's happening
-        console.log('Page loading...');
-        
         // Get URL parameter (support both ?name= and ?id=)
         const urlParams = new URLSearchParams(window.location.search);
         let outfitterId = urlParams.get('id');
@@ -203,46 +200,41 @@
         
         // Decode URL-encoded names
         if (outfitterName) {
-            outfitterName = decodeURIComponent(outfitterName);
+            outfitterName = decodeURIComponent(outfitterName).trim();
         }
         
-        console.log('Looking for:', outfitterId || outfitterName);
-        console.log('OUTFITTERS defined:', typeof OUTFITTERS !== 'undefined');
-        console.log('OUTFITTERS length:', OUTFITTERS ? OUTFITTERS.length : 0);
-        
         let outfitter = null;
-
-        // Find the outfitter from OUTFITTERS array
-        if (typeof OUTFITTERS !== 'undefined' && OUTFITTERS) {
-            if (outfitterId) {
-                console.log('Searching by ID:', outfitterId);
-                outfitter = OUTFITTERS.find(o => o.id === outfitterId);
-            } else if (outfitterName) {
-                console.log('Searching by name:', outfitterName);
-                // Try exact match first, then partial match
-                outfitter = OUTFITTERS.find(o => o.name.toLowerCase() === outfitterName.toLowerCase());
-                console.log('Exact match:', !!outfitter);
-                
-                // Try without "outfitters" suffix
-                if (!outfitter) {
-                    const searchName = outfitterName.toLowerCase().replace(/ outfitters?$/i, '').trim();
-                    outfitter = OUTFITTERS.find(o => o.name.toLowerCase().replace(/ outfitters?$/i, '').trim() === searchName);
-                    console.log('Without suffix:', !!outfitter);
-                }
-                
-                // Try partial match
-                if (!outfitter) {
-                    outfitter = OUTFITTERS.find(o => o.name.toLowerCase().includes(outfitterName.toLowerCase()));
-                    console.log('Partial match:', !!outfitter);
-                }
-                
-                // Try by ID if name search fails
-                if (!outfitter) {
-                    outfitter = OUTFITTERS.find(o => o.id === outfitterName.toLowerCase().replace(/ /g, '-'));
-                    console.log('By ID match:', !!outfitter);
-                }
+        
+        // Check if data loaded
+        if (typeof OUTFITTERS === 'undefined' || !OUTFITTERS) {
+            document.getElementById('outfitterName').textContent = 'Data Not Loading';
+            document.getElementById('description').textContent = 'Error: outfitters.js failed to load. Please refresh the page.';
+        } else if (outfitterId) {
+            // Look up by ID
+            outfitter = OUTFITTERS.find(o => o.id === outfitterId);
+        } else if (outfitterName) {
+            // Look up by name - try various matching approaches
+            const nameLower = outfitterName.toLowerCase();
+            
+            // 1. Exact match
+            outfitter = OUTFITTERS.find(o => o.name.toLowerCase() === nameLower);
+            
+            // 2. Remove "outfitters" or "outfitter" and try again
+            if (!outfitter) {
+                const baseName = nameLower.replace(/\s+(outfitters?|guides?|guides?)$/i, '').trim();
+                outfitter = OUTFITTERS.find(o => o.name.toLowerCase().replace(/\s+(outfitters?|guides?|guides?)$/i, '').trim() === baseName);
             }
-            console.log('Outfitter found:', outfitter ? outfitter.name : 'null');
+            
+            // 3. Partial match - name contains search term
+            if (!outfitter) {
+                outfitter = OUTFITTERS.find(o => o.name.toLowerCase().includes(nameLower) || nameLower.includes(o.name.toLowerCase()));
+            }
+            
+            // 4. Try converting name to ID format
+            if (!outfitter) {
+                const idFromName = nameLower.replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+                outfitter = OUTFITTERS.find(o => o.id === idFromName);
+            }
         }
 
         // If found, populate all fields
