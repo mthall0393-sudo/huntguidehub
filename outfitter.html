@@ -239,6 +239,15 @@
                 const idFromName = nameLower.replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
                 outfitter = OUTFITTERS.find(o => o.id === idFromName);
             }
+            
+            // 5. Debug: list all outfitter names if still not found
+            if (!outfitter) {
+                console.log('=== DEBUG: Available outfitters ===');
+                OUTFITTERS.forEach((o, i) => {
+                    console.log(i + ': ' + o.name + ' (id: ' + o.id + ')');
+                });
+                console.log('=== END DEBUG ===');
+            }
         }
 
         // If found, populate all fields
