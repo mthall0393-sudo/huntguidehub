@@ -120,18 +120,54 @@
         grid.appendChild(card);
     });
 
-    // Map with outfitter pins (includes email for inquiry form)
+    // Map with all outfitters
     const mapOutfitters = [
-        {name: "Colorado Elk Outfitter", lat: 38.8339, lng: -104.8214, city: "Colorado Springs, CO", email: "info@coloradoelkoutfitter.com"},
-        {name: "Cavender Whitetail Hunts", lat: 32.4015, lng: -98.8206, city: "Eastland, TX", email: "info@cavenderwhitetailhunts.com"},
-        {name: "Big Horn Outfitters", lat: 42.5494, lng: -108.8546, city: "Lander, WY", email: "contact@bighornoutfitters.com"},
-        {name: "Michigan Waterfowl Guides", lat: 42.9632, lng: -85.6579, city: "Grand Rapids, MI", email: "book@michiganwaterfowlguides.com"},
-        {name: "Ohio Deer Adventures", lat: 39.9612, lng: -82.9988, city: "Columbus, OH", email: "inquiries@ohiodeeradventures.com"},
-        {name: "Texas Turkey Guides", lat: 30.2672, lng: -97.7431, city: "Austin, TX", email: "book@texasturkeyguides.com"},
-        {name: "Arizona Elk Hunts", lat: 35.1983, lng: -111.6513, city: "Flagstaff, AZ", email: "info@arizonaelkhunts.com"},
-        {name: "Montana Big Game", lat: 45.6770, lng: -111.0389, city: "Bozeman, MT", email: "book@montanabiggame.com"},
-        {name: "South Dakota Pheasant", lat: 43.5446, lng: -96.7311, city: "Sioux Falls, SD", email: "info@sd pheasanthunting.com"},
-        {name: "Kansas Deer Masters", lat: 38.5266, lng: -96.7265, city: "Hays, KS", email: "book@ksdeermasters.com"}
+        // Colorado
+        {name: "Colorado Elk Outfitter, LLC", lat: 38.8339, lng: -104.8214, city: "Colorado Springs, CO", email: "info@coloradoelkoutfitter.com", species: "Elk"},
+        {name: "Severson Outfitters", lat: 40.4658, lng: -106.8317, city: "Steamboat Springs, CO", email: "info@seversonoutfitters.com", species: "Elk"},
+        {name: "Cherokee T.P. Outfitters", lat: 37.5947, lng: -105.8703, city: "Alamosa, CO", email: "info@cherokeetpoutfitters.com", species: "Elk"},
+        {name: "Rocky Mountain Outfitters", lat: 40.0150, lng: -105.2705, city: "Boulder, CO", email: "info@rmooc.net", species: "Elk"},
+        {name: "Gunnison Country Outfitters", lat: 38.2008, lng: -106.9312, city: "Gunnison, CO", email: "info@gunnisoncountryoutfitters.com", species: "Elk"},
+        {name: "Colorado Big Game Outfitters", lat: 37.2690, lng: -107.8820, city: "Durango, CO", email: "info@coloradobiggameoutfitters.com", species: "Elk"},
+        // Wyoming
+        {name: "Big Horn Outfitters", lat: 42.5494, lng: -108.8546, city: "Lander, WY", email: "contact@bighornoutfitters.com", species: "Elk"},
+        {name: "Beaver Trap Outfitters", lat: 42.5494, lng: -108.8546, city: "Lander, WY", email: "info@beavertrapoutfitters.com", species: "Elk"},
+        {name: "Wood River Ranch", lat: 42.8666, lng: -106.3130, city: "Casper, WY", email: "info@woodriverranch.com", species: "Elk"},
+        {name: "Huntin' Fool Outfitters", lat: 43.4799, lng: -110.7624, city: "Jackson, WY", email: "info@huntinfool.com", species: "Elk"},
+        {name: "Cody Wyoming Outfitters", lat: 44.5261, lng: -109.0576, city: "Cody, WY", email: "info@codywyomingoutfitters.com", species: "Elk"},
+        // Texas
+        {name: "Cavender Whitetail Hunts", lat: 32.4015, lng: -98.8206, city: "Eastland, TX", email: "info@cavenderwhitetailhunts.com", species: "Deer"},
+        {name: "Texas Thermal Outfitters", lat: 29.4241, lng: -98.4936, city: "San Antonio, TX", email: "info@texasthermaloutfitters.com", species: "Deer"},
+        {name: "Big Texas Deer", lat: 33.2148, lng: -97.1331, city: "Denton, TX", email: "info@bigtexasdeer.com", species: "Deer"},
+        {name: "Texas Hunt Ranch", lat: 29.4241, lng: -98.4936, city: "San Antonio, TX", email: "info@texashuntranch.com", species: "Deer"},
+        {name: "First Shot Outfitters", lat: 31.8288, lng: -99.3101, city: "Coleman, TX", email: "info@firstshothunts.com", species: "Deer"},
+        // Kansas
+        {name: "Kansas Deer Outfitters", lat: 38.5266, lng: -96.7265, city: "Hays, KS", email: "info@kspheasant.com", species: "Deer"},
+        {name: "Prairie Sky Outfitters", lat: 37.7631, lng: -100.0174, city: "Dodge City, KS", email: "info@prairieskyoutfitters.com", species: "Deer"},
+        {name: "Flint Hills Hunting", lat: 38.0562, lng: -97.9237, city: "Hutchinson, KS", email: "info@flinthillshunting.com", species: "Deer"},
+        {name: "Sunflower State Outfitters", lat: 38.8203, lng: -97.6114, city: "Salina, KS", email: "info@sunflowerstateoutfitters.com", species: "Deer"},
+        // Ohio
+        {name: "Ohio Deer Adventures", lat: 39.9612, lng: -82.9988, city: "Columbus, OH", email: "inquiries@ohiodeeradventures.com", species: "Deer"},
+        {name: "Buckeye Hunting Outfitters", lat: 39.7589, lng: -84.1916, city: "Dayton, OH", email: "info@buckeyehunting.com", species: "Deer"},
+        {name: "Great Lakes Hunting Guides", lat: 41.6528, lng: -83.5379, city: "Toledo, OH", email: "info@greatlakeshunting.com", species: "Deer"},
+        // Iowa
+        {name: "Iowa Hunting Guides", lat: 41.5868, lng: -93.6250, city: "Des Moines, IA", email: "info@iowahuntingguides.com", species: "Deer"},
+        {name: "Midwest Outfitters", lat: 41.9779, lng: -91.6656, city: "Cedar Rapids, IA", email: "info@midwestoutfitters.com", species: "Deer"},
+        // Montana
+        {name: "Montana Big Game", lat: 45.6770, lng: -111.0389, city: "Bozeman, MT", email: "book@montanabiggame.com", species: "Elk"},
+        {name: "Yellowstone Trophy Hunts", lat: 45.0030, lng: -110.6711, city: "West Yellowstone, MT", email: "info@ythunts.com", species: "Elk"},
+        // South Dakota
+        {name: "South Dakota Pheasant", lat: 43.5446, lng: -96.7311, city: "Sioux Falls, SD", email: "info@sd-pheasanthunting.com", species: "Pheasant"},
+        {name: "Ranch of the Black Hills", lat: 44.0805, lng: -103.2314, city: "Rapid City, SD", email: "info@ranchblackhills.com", species: "Deer"},
+        // Arizona
+        {name: "Arizona Elk Hunts", lat: 35.1983, lng: -111.6513, city: "Flagstaff, AZ", email: "info@arizonaelkhunts.com", species: "Elk"},
+        {name: "High Country Hunts", lat: 34.4487, lng: -111.7894, city: "Prescott, AZ", email: "info@highcountryhunts.com", species: "Elk"},
+        // Michigan
+        {name: "Michigan Waterfowl Guides", lat: 42.9632, lng: -85.6579, city: "Grand Rapids, MI", email: "book@michiganwaterfowlguides.com", species: "Waterfowl"},
+        {name: "U.P. Bear Guides", lat: 46.5396, lng: -87.4124, city: "Marquette, MI", email: "info@upbearguides.com", species: "Bear"},
+        // Alaska
+        {name: "Alaska Brown Bear Adventures", lat: 64.8378, lng: -147.7164, city: "Fairbanks, AK", email: "info@alaskabrownbear.com", species: "Bear"},
+        {name: "Delta Junction Hunts", lat: 64.0522, lng: -145.7273, city: "Delta Junction, AK", email: "info@deltajunctionhunts.com", species: "Moose"}
     ];
 
     // Initialize map
@@ -143,9 +179,10 @@
     // Add markers with popups
     mapOutfitters.forEach(o => {
         const popupContent = `
-            <div style="min-width:150px;">
-                <h4 style="margin:0 0 8px 0; color:#2c5f2d;">${o.name}</h4>
-                <p style="margin:0 0 8px 0; font-size:12px;">${o.city}</p>
+            <div style="min-width:180px;">
+                <h4 style="margin:0 0 5px 0; color:#2c5f2d;">${o.name}</h4>
+                <p style="margin:0 0 3px 0; font-size:12px;">📍 ${o.city}</p>
+                <p style="margin:0 0 8px 0; font-size:11px; color:#666;">🎯 ${o.species}</p>
                 <a href="outfitter.html?name=${encodeURIComponent(o.name)}&email=${encodeURIComponent(o.email)}" style="color:#2c5f2d; font-weight:bold;">View Profile →</a>
             </div>
         `;
